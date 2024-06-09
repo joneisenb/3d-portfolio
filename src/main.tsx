@@ -3,9 +3,9 @@
 // import App from './App.tsx'
 import './index.css'
 //@ts-ignore
-import * as THREE from 'three';
+import * as THREE from 'three/src/Three.js';
 //@ts-ignore
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 
 
 class Planet {
