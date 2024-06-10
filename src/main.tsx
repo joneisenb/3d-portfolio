@@ -3,9 +3,9 @@
 // import App from './App.tsx'
 import './index.css'
 //@ts-ignore
-import * as THREE from 'three/src/Three.js';
+import * as THREE from 'three';
 //@ts-ignore
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 
 class Planet {
@@ -111,8 +111,8 @@ const planets: Planet[] = [
 planets.push();
 
 for (let i = 0; i < planets.length; i++) {
-    planetMeshes.add(planets[i].planetMesh);
-    scene.add(planets[i].orbitCurve);
+    planetMeshes.add(planets[i]!.planetMesh);
+    scene.add(planets[i]!.orbitCurve);
 }
 
 
@@ -178,7 +178,6 @@ function animate() {
         val += 0.00003;
         if (parseFloat(followText!.style.opacity) < 1) {
             followText!.style.opacity = (parseFloat(followText!.style.opacity) + 0.01).toString();
-            console.log(followText!.style.opacity)
         }
 
     }
@@ -186,14 +185,13 @@ function animate() {
         val +=0.0001;
         if (parseFloat(followText!.style.opacity) > 0) {
             followText!.style.opacity = (parseFloat(followText!.style.opacity) - 0.01).toString();
-            console.log(followText!.style.opacity)
         }
 
     }
 
     for (let i = 0; i < planets.length; i++) {
-        planets[i].planetMesh.position.x = calculateSin((val * planets[i].orbitSpeed) + planets[i].offset, planets[i].orbitRadius);
-        planets[i].planetMesh.position.z = calculateCos(val * planets[i].orbitSpeed + planets[i].offset, planets[i].orbitRadius);
+        planets[i]!.planetMesh.position.x = calculateSin((val * planets[i]!.orbitSpeed) + planets[i]!.offset, planets[i]!.orbitRadius);
+        planets[i]!.planetMesh.position.z = calculateCos(val * planets[i]!.orbitSpeed + planets[i]!.offset, planets[i]!.orbitRadius);
     }
 
     controls.update();
