@@ -144,7 +144,10 @@ function onPointerMove(event: MouseEvent) {
 
 }
 
-
+window.addEventListener('resize', function () {
+    "use strict";
+    window.location.reload();
+});
 
 
 function resetMaterials() {
