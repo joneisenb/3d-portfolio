@@ -20,6 +20,7 @@ h1 {
     align-items:left;
     justify-content:left;
     text-align:left;
+    pointer-events: none;
 }
 
 canvas {
@@ -43,6 +44,7 @@ canvas {
     bottom:0;
     width:50%;
     left:0;
+    pointer-events: none;
 }
 
 .right_side_container {
