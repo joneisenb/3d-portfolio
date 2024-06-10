@@ -68,19 +68,33 @@ canvas {
 .resume_box {
     align-self:center;
     width:100%;
-    flex-grow:3;
+    flex-grow:5;
     margin:5px;
 }
 
 .resume_stack_box {
     align-content:center;
-    display:flex;
+    display:grid;
     color:white;
-    background-color:blue;
-    flex-grow:1;
+    flex-shrink:3;
     margin-top:5px;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    max-height: 200px;
 }
 
 .stack_item {
-    align-content:center;
+    overflow: hidden;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    height:10vh;
+    aspect-ratio:1;
+}
+
+img {
+    height:50%;
+    width: auto;
+    object-fit: cover;
+    object-position:center;
 }
