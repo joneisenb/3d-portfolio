@@ -3,6 +3,12 @@
     src: url('assets/BebasNeue-Regular.ttf');
 }
 
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+  }
+
 h1 {
     left:20px;
     top:20px;
@@ -33,7 +39,6 @@ canvas {
     text-align:center;
     margin-bottom: 10;
     margin-left: 40;
-    margin-top: 10;
     padding: 10px;
     bottom:0;
     width:50%;
@@ -45,39 +50,35 @@ canvas {
     display:flex;
     flex-direction:column;
     z-index:200;
-    background-color:green;
-    right:20px;
-    bottom:20px;
-    top:20px;
-    left:60%;
-    align-content:center;
-    justify-self:center;
+    background-color:black;
+    justify-content:center;
     opacity:0.75;
+    width:40%;
+    right:0px;
+    padding:10px;
+    height: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .resume_box {
-    position:absolute;
-    bottom:30%;
-    right:10px;
-    left:10px;
-    top:10px;
-    align-content:center;
-    justify-self:center;
+    align-self:center;
     width:100%;
+    flex-grow:3;
+    margin:5px;
 }
 
-.resume_stack {
-    position:absolute;
-    display:inline-flex;
-    color:white;
-    bottom:0px;
-    right:0px;
-    left:0px;
-    top:70%;
-    margin:10px;
-    background-color:grey;
-    padding: 10px;
+.resume_stack_box {
     align-content:center;
-    justify-self:center;
-    text-align:center;
+    display:flex;
+    color:white;
+    background-color:blue;
+    flex-grow:1;
+    margin-top:5px;
+}
+
+.stack_item {
+    align-content:center;
 }
