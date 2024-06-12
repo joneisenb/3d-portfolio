@@ -95,6 +95,8 @@ img {
 }
 
 .right_container_button {
+    font-family: 'bebas_neueregular';
+    font-size:30px;
     flex-grow:1;
     background-color:black;
     color:white;
