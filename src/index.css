@@ -63,27 +63,25 @@ canvas {
 
 .right_side_container {
     flex-grow:10;
-    display:flex;
-    flex-direction:column;
+    display:inline-flex;
+    justify-content:space-between;
+    flex-direction:row;
     opacity:0.75;
+    width: inherit;
 }
 
 .resume_box {
     align-self:center;
     width:100%;
-    flex-grow:5;
-    margin:5px;
+    height:100%;
 }
 
 .resume_stack_box {
-    align-content:center;
-    display:grid;
-    color:white;
-    flex-shrink:3;
-    margin-top:5px;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    max-height: 200px;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    flex-grow:1;
+    width:10%;
 }
 
 .stack_item {
@@ -96,7 +94,7 @@ canvas {
 }
 
 img {
-    height:70%;
+    height:100%;
     width: auto;
     object-fit: cover;
     object-position:center;
