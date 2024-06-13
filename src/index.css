@@ -51,9 +51,9 @@ canvas {
 .right_page_container {
     position:absolute;
     display:flex;
+    flex-direction:row;
     z-index:200;
-    background-color:black;
-    justify-content:center;
+    justify-content:space-between;
     width:50%;
     right:0px;
     height: 100%;
@@ -61,22 +61,35 @@ canvas {
     box-sizing: border-box;
     overflow-x: hidden;
     overflow-y: hidden;
+    background-color: black;
+}
+
+.right_side_container {
+    position:relative;
+    display:flex;
+    flex-direction:row;
+    opacity:0.75;
+    width: 100%;
+    align-items:flex-end;
+    height:100%;
 }
 
 
 
 .resume_box {
-    align-self:center;
-    width:100%;
+    align-self:left;
+    width:90%;
     height:100%;
 }
 
 .resume_stack_box {
-    position:relative;
     display:flex;
     flex-direction:column;
+    justify-content:space-around;
     flex-grow:1;
-    width:10%;
+    width:10vh;
+    right:0px;
+    height:100%;
 }
 
 .stack_item {
@@ -95,8 +108,41 @@ img {
 }
 
 .right_container_button {
+    display:inline-block;
+    font-family: 'bebas_neueregular';
+    font-size:20px;
+    text-wrap:wrap;
+    word-wrap:break-word;
+    flex-grow:1;
+    background-color:black;
+    color:grey;
+    justify-content:center;
+    width:30px;
+    height: 100%;
+    min-height: 100%;
+    transition-duration: 0.4s;
+    border-width:0px;
+    cursor: pointer;
+}
+
+.right_container_button:hover {
+    background-color:#990000;
+    color:white;
+}
+
+.right_container_button:hover:active {
+    background-color:black;
+    color:white;
+    transition-duration:0s;
+
+}
+
+.right_container_button_mobile {
+    display:none;
     font-family: 'bebas_neueregular';
     font-size:30px;
+    text-wrap:wrap;
+    word-wrap:break-word;
     flex-grow:1;
     background-color:black;
     color:white;
@@ -105,6 +151,8 @@ img {
     height: 100%;
     min-height: 100%;
 }
+
+
 
 @media (max-width: 1000px) {
     .right_page_container {
@@ -123,10 +171,19 @@ img {
 
     }
     .right_container_button {
+        display:none;
         position:relative;
         flex-grow:3;
         justify-content:center;
-        opacity:0.3;
+        height: 10vh;
+        width:100%;
+    }
+
+    .right_container_button_mobile {
+        display:inline-block;
+        position:relative;
+        flex-grow:3;
+        justify-content:center;
         height: 10vh;
         width:100%;
     }
