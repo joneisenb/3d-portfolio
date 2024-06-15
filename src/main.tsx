@@ -10,6 +10,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 class Planet {
     planetMesh: THREE.Mesh;
+    planetWireMesh: THREE.Mesh;
     orbitCurve: THREE.Line;
     orbitRadius: number;
     orbitSpeed: number;
@@ -19,9 +20,10 @@ class Planet {
     constructor(planetRadius: number, orbitRadius: number, color: number, speed: number, offset: number, text: string) {
         this.createPlanetMesh(planetRadius,color,text);
         this.createOrbitCurve(orbitRadius,color);
+        this.createPlanetWireMesh(planetRadius);
         this.orbitRadius = orbitRadius;
         this.orbitSpeed = speed;
-        this.offset = offset
+        this.offset = offset;
         this.planetText = text;
     }
     createOrbitCurve(radius: number, color: number) {
@@ -52,9 +54,20 @@ class Planet {
         this.planetMesh = new THREE.Mesh(geometry, material);
         this.planetMesh.name = text;
     }
+    createPlanetWireMesh(radius: number) {
+        const geometry = new THREE.SphereGeometry(radius * 1.1);
+        const material = new THREE.MeshBasicMaterial({color: 0xFFFFFF, wireframe:true});
+        this.planetWireMesh = new THREE.Mesh(geometry, material);
+        this.planetWireMesh.material.transparent=true;
+        this.planetWireMesh.material.opacity=0.0;
+
+    }
   }
 
+// Init gui
+
 const planetMeshes = new THREE.Group();
+const planetWireMeshes = new THREE.Group();
 
 const scene = new THREE.Scene();
 
@@ -64,8 +77,6 @@ camera.position.set(1000,200,1000);
 const renderer = new THREE.WebGLRenderer({
     canvas: document.querySelector('#bg'),
 });
-
-
 
 renderer.setPixelRatio(window.devicePixelRatio)
 renderer.setSize(window.innerWidth, window.innerHeight)
@@ -113,6 +124,7 @@ planets.push();
 for (let i = 0; i < planets.length; i++) {
     planetMeshes.add(planets[i]!.planetMesh);
     scene.add(planets[i]!.orbitCurve);
+    planetWireMeshes.add(planets[i]!.planetWireMesh);
 }
 
 
@@ -162,10 +174,14 @@ function onClick(event: MouseEvent) {
         (event.clientX/renderer.domElement.clientWidth) * 2 - 1,
         -((event.clientY/renderer.domElement.clientHeight) * 2 - 1)
     )
+    for (let i = 0; i < planetMeshes.children.length; i++) {
+        planetMeshes.children[i].material.wireframe=false;
+    }
     raycaster.setFromCamera(coords, camera);
     const intersects = raycaster.intersectObjects(planetMeshes.children);
     if(intersects.length > 0) {
         console.log(intersects[0].object.name);
+        intersects[0].object.material.wireframe=true;
     }
 }
 
@@ -195,6 +211,8 @@ function animate() {
     for (let i = 0; i < planets.length; i++) {
         planets[i]!.planetMesh.position.x = calculateSin((val * planets[i]!.orbitSpeed) + planets[i]!.offset, planets[i]!.orbitRadius);
         planets[i]!.planetMesh.position.z = calculateCos(val * planets[i]!.orbitSpeed + planets[i]!.offset, planets[i]!.orbitRadius);
+        planets[i]!.planetWireMesh.position.x = calculateSin((val * planets[i]!.orbitSpeed) + planets[i]!.offset, planets[i]!.orbitRadius);
+        planets[i]!.planetWireMesh.position.z = calculateCos(val * planets[i]!.orbitSpeed + planets[i]!.offset, planets[i]!.orbitRadius);
     }
 
     controls.update();
