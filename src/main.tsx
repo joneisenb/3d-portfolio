@@ -71,7 +71,7 @@ const planetWireMeshes = new THREE.Group();
 
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 2000)
+const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 3000)
 camera.position.set(1000,200,1000);
 
 const renderer = new THREE.WebGLRenderer({
@@ -81,6 +81,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setPixelRatio(window.devicePixelRatio)
 renderer.setSize(window.innerWidth, window.innerHeight)
 camera.position.setZ(30);
+
 
 renderer.render(scene, camera);
 
@@ -148,7 +149,7 @@ function onPointerMove(event: MouseEvent) {
     raycaster.setFromCamera(coords, camera);
     const intersects = raycaster.intersectObjects(planetMeshes.children);
     if(intersects.length > 0) {
-        hoveredObject=intersects[0].object
+        hoveredObject=intersects[0].object;
         hovering = true;
         followText!.innerText = hoveredObject.name;
         hoveredObject.material.opacity = 0.6;
@@ -235,9 +236,9 @@ function calculateCos(val: number, max: number ) {
 }
 
 
-function addStar() {
+function addParticle() {
     const geometry = new THREE.SphereGeometry(0.25,24,24);
-    const material = new THREE.MeshStandardMaterial( {color:0xffffff});
+    const material = new THREE.MeshBasicMaterial( {color:0xffffff});
     const star = new THREE.Mesh(geometry, material);
 
     const [x,y,z] = Array(3).fill(0).map(() => THREE.MathUtils.randFloatSpread(1000));
@@ -246,5 +247,18 @@ function addStar() {
     scene.add(star);
 }
 
-Array(200).fill(0).forEach(addStar);
+Array(200).fill(0).forEach(addParticle);
+
+function addStar() {
+    const geometry = new THREE.SphereGeometry(1,24,24);
+    const material = new THREE.MeshBasicMaterial( {color:0xffffff});
+    const star = new THREE.Mesh(geometry, material);
+
+    const [x,y,z] = Array(3).fill(0).map(() => THREE.MathUtils.randFloatSpread(3000));
+
+    star.position.set(x,y,z);
+    scene.add(star);
+}
+
+Array(100).fill(0).forEach(addStar);
 
