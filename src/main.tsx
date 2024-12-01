@@ -170,6 +170,11 @@ function resetMaterials() {
     }
 }
 
+
+let lerp_position = new THREE.Vector3(0,0,0);
+let position_alpha = 0
+let rotation_alpha = 0
+let planet_selected = false
 function onClick(event: MouseEvent) {
     const coords = new THREE.Vector2(
         (event.clientX/renderer.domElement.clientWidth) * 2 - 1,
@@ -181,14 +186,18 @@ function onClick(event: MouseEvent) {
     raycaster.setFromCamera(coords, camera);
     const intersects = raycaster.intersectObjects(planetMeshes.children);
     if(intersects.length > 0) {
-        console.log(intersects[0].object.name);
-        intersects[0].object.material.wireframe=true;
+        planet_selected = true;
+        lerp_position = intersects[0].object.position;
+        position_alpha = 0;
+        rotation_alpha = 0;
+        controls.minDistance = 300;
     }
 }
 
 
 
 scene.add(planetMeshes)
+
 
 function animate() {
 
@@ -208,12 +217,20 @@ function animate() {
         }
 
     }
+    if (!planet_selected) {
+        for (let i = 0; i < planets.length; i++) {
+            planets[i]!.planetMesh.position.x = calculateSin((val * planets[i]!.orbitSpeed) + planets[i]!.offset, planets[i]!.orbitRadius);
+            planets[i]!.planetMesh.position.z = calculateCos(val * planets[i]!.orbitSpeed + planets[i]!.offset, planets[i]!.orbitRadius);
+            planets[i]!.planetWireMesh.position.x = calculateSin((val * planets[i]!.orbitSpeed) + planets[i]!.offset, planets[i]!.orbitRadius);
+            planets[i]!.planetWireMesh.position.z = calculateCos(val * planets[i]!.orbitSpeed + planets[i]!.offset, planets[i]!.orbitRadius);
+        }
+    }
 
-    for (let i = 0; i < planets.length; i++) {
-        planets[i]!.planetMesh.position.x = calculateSin((val * planets[i]!.orbitSpeed) + planets[i]!.offset, planets[i]!.orbitRadius);
-        planets[i]!.planetMesh.position.z = calculateCos(val * planets[i]!.orbitSpeed + planets[i]!.offset, planets[i]!.orbitRadius);
-        planets[i]!.planetWireMesh.position.x = calculateSin((val * planets[i]!.orbitSpeed) + planets[i]!.offset, planets[i]!.orbitRadius);
-        planets[i]!.planetWireMesh.position.z = calculateCos(val * planets[i]!.orbitSpeed + planets[i]!.offset, planets[i]!.orbitRadius);
+    if (planet_selected) {
+        Math.min(position_alpha += 0.0002, 1)
+        Math.min(rotation_alpha += 0.002, 1)
+        camera.position.lerp(lerp_position, position_alpha)
+        controls.target.lerp(lerp_position, rotation_alpha)
     }
 
     controls.update();
